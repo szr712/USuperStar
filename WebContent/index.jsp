@@ -91,7 +91,7 @@
 
 													<div class="clearfix">
 														<label class="inline">
-															<input type="checkbox" class="ace" id="login-save"/>
+															<input type="checkbox" class="ace" id="login-save" name="login-save"/>
 															<span class="lbl"> 记住我</span>
 														</label>
 

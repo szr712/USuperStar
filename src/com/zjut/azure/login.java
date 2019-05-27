@@ -11,6 +11,7 @@ import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +52,54 @@ public class login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String value1 = "", value2 = "";
+		Cookie cookie = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				cookie = cookies[i];
+				if (cookie.getName().equals("num"))
+					value1 = cookie.getValue();
+				if (cookie.getName().equals("password"))
+					value2 = cookie.getValue();
+			}
+			String sql = "SELECT * FROM Administrator WHERE Anum=?";
+			PreparedStatement pStatement;
+			if (!value1.equals("")) {
+				try {
+					pStatement = con.prepareStatement(sql);
+					pStatement.setString(1, value1);
+					ResultSet resultSet = pStatement.executeQuery();
+					Administrator administrator = new Administrator();
+					ArrayList<Administrator> aList = new ArrayList<>();
+					while (resultSet.next()) {
+
+						administrator.setNum(resultSet.getString("Anum"));
+						administrator.setName(resultSet.getString("Aname"));
+						administrator.setEmail(resultSet.getString("Aemail"));
+						administrator.setPassword(resultSet.getString("Apassword").trim());
+						aList.add(administrator);
+					}
+
+					if (!aList.isEmpty() && value2.equals(administrator.getPassword())) {
+
+						request.setAttribute("Admi", administrator);
+
+						RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcom.jsp");
+						rDispatcher.forward(request, response);
+					} else {
+						RequestDispatcher rDispatcher = request.getRequestDispatcher("/index.jsp");
+						rDispatcher.forward(request, response);
+					}
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
 	}
 
 	/**
@@ -63,7 +111,7 @@ public class login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String num = request.getParameter("num");
 		String password = request.getParameter("password");
-		ArrayList<Administrator> aList=new ArrayList<>();
+		ArrayList<Administrator> aList = new ArrayList<>();
 		String sql = "SELECT * FROM Administrator WHERE Anum=?";
 		try {
 
@@ -71,13 +119,9 @@ public class login extends HttpServlet {
 			pStatement.setString(1, num);
 			ResultSet resultSet = pStatement.executeQuery();
 
-			//System.out.println(password);
+			// System.out.println(password);
 
 			Administrator administrator = new Administrator();
-			
-			
-			
-
 			while (resultSet.next()) {
 
 				administrator.setNum(resultSet.getString("Anum"));
@@ -87,9 +131,18 @@ public class login extends HttpServlet {
 				aList.add(administrator);
 			}
 
-			if (password.equals(administrator.getPassword())) {
-				request.setAttribute("Admi", administrator);
+			if (!aList.isEmpty() && password.equals(administrator.getPassword())) {
+				//request.getParameter("login-save");
+				if (request.getParameter("login-save") != null && request.getParameter("login-save").equals("on")) {
+					Cookie numCookie = new Cookie("num", num);
+					Cookie passwordCookie = new Cookie("password", password);
+					numCookie.setMaxAge(60 * 60);//保存一小时
+					passwordCookie.setMaxAge(60 * 60);
+					response.addCookie(numCookie);
+					response.addCookie(passwordCookie);
+				}
 
+				request.setAttribute("Admi", administrator);
 				RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcom.jsp");
 				rDispatcher.forward(request, response);
 			} else {
