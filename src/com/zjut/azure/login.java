@@ -46,12 +46,14 @@ public class login extends HttpServlet {
 	}
 
 	/**
+	 * 实现自动登录 自动登录保存一小时
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//System.out.println(1);
 		String value1 = "", value2 = "";
 		Cookie cookie = null;
 		Cookie[] cookies = request.getCookies();
@@ -85,7 +87,7 @@ public class login extends HttpServlet {
 
 						request.setAttribute("Admi", administrator);
 
-						RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcom.jsp");
+						RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcome.jsp");
 						rDispatcher.forward(request, response);
 					} else {
 						RequestDispatcher rDispatcher = request.getRequestDispatcher("/index.jsp");
@@ -143,9 +145,10 @@ public class login extends HttpServlet {
 				}
 
 				request.setAttribute("Admi", administrator);
-				RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcom.jsp");
+				RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcome.jsp");
 				rDispatcher.forward(request, response);
 			} else {
+				request.setAttribute("fail", "登录失败，请重试！");
 				RequestDispatcher rDispatcher = request.getRequestDispatcher("/index.jsp");
 				rDispatcher.forward(request, response);
 			}

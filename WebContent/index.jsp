@@ -40,6 +40,24 @@
 		<![endif]-->
 	</head>
 
+<%
+String value1 = "", value2 = "";
+Cookie cookie = null;
+Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+	for (int i = 0; i < cookies.length; i++) {
+		cookie = cookies[i];
+		if (cookie.getName().equals("num"))
+			value1 = cookie.getValue();
+		if (cookie.getName().equals("password"))
+			value2 = cookie.getValue();
+	}
+	if(!value1.equals("")&&!value2.equals("")){
+		RequestDispatcher rDispatcher = request.getRequestDispatcher("/login");
+		rDispatcher.forward(request, response);
+	}
+}
+%>
 	<body class="login-layout">
 		<div class="main-container">
 			<div class="main-content">
@@ -70,6 +88,9 @@
 											
 
 											<div class="space-6"></div>
+											<h5>
+											${fail}
+											</h5>
 
 											<form action="login" method="POST">
 												<fieldset>
