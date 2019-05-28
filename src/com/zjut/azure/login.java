@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sun.org.apache.xml.internal.security.Init;
-
 /**
  * Servlet implementation class login
  */
