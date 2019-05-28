@@ -2,8 +2,6 @@ package com.zjut.azure;
 
 import java.io.Serializable;
 
-import javax.management.loading.PrivateClassLoader;
-
 public class Administrator implements Serializable{
 
 	private String num;
