@@ -1,3 +1,10 @@
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.io.OutputStreamWriter"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.BufferedWriter"%>
+
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="com.zjut.azure.Administrator" %>
@@ -53,7 +60,61 @@
 </head>
 
 <body class="no-skin">
-	<%@ include file="HTMLfile/navbar.html" %>
+
+	<div id="navbar" class="navbar navbar-default          ace-save-state">
+		<div class="navbar-container ace-save-state" id="navbar-container">
+			<button type="button" class="navbar-toggle menu-toggler pull-left"
+				id="menu-toggler" data-target="#sidebar">
+				<span class="sr-only">Toggle sidebar</span> <span class="icon-bar"></span>
+
+				<span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+
+			<div class="navbar-header pull-left">
+				<a href="index.html" class="navbar-brand"> <small> <i
+						class="fa fa-h-square"></i> 后台管理 &nbsp;<small> USuperStar
+					</small>
+				</small>
+				</a>
+			</div>
+
+			<div class="navbar-buttons navbar-header pull-right"
+				role="navigation">
+				<ul class="nav ace-nav">
+					<li class="light-blue dropdown-modal"><a
+						data-toggle="dropdown" href="#" class="dropdown-toggle"> <img
+							class="nav-user-photo" src="assets/images/avatars/avatar4.png"
+							alt="Jason's Photo" /> <span class="user-info"> <small>欢迎,</small>
+								<%
+								
+								Administrator administrator=(Administrator)request.getSession().getAttribute("Admi");
+								
+								if(administrator!=null){%> 
+								<%=administrator.getName() %>
+								<%}%>
+
+						</span> <i class="ace-icon fa fa-caret-down"></i>
+					</a>
+
+						<ul
+							class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+							
+
+							<li><a href="profile.jsp"> <i
+									class="ace-icon fa fa-user"></i> 个人信息
+							</a></li>
+
+							<li class="divider"></li>
+
+							<li><a href="logout"> <i
+									class="ace-icon fa fa-power-off"></i> 退出登录
+							</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.navbar-container -->
+	</div>
 
 	<div class="main-container ace-save-state" id="main-container">
 		<script type="text/javascript">
@@ -158,7 +219,7 @@
 								<%!String [] sen={"从没有白费的努力，也没有碰巧的成功。只要认真对待工作，终有一天，你的每一份努力，都将绚烂成花。","生活从来都是公平的，你未来的模样，藏在你现在的努力里。有规划的人生，真的会比浑浑噩噩精彩一万倍。新的每一天，请勇敢去尝试，拼命去追寻。",
 								"和什么样的人在一起，就会有什么样的人生。和勤奋的人在一起，你不会懒惰；和积极的人在一起，你不会消沉；与高人为伍，你能登上巅峰。","人生最可悲的事情，莫过于胸怀大志，却又虚度光阴。没有行动，懒惰就会生根发芽；没有梦想，堕落就会生根发芽。每一个不努力的时光，都是对生命的辜负。不要再为生活彷徨，放手去做去实现，人生才更美。如果自己没有尽力，就没有资格去抱怨生活。你必须暗自努力，才能在人前显得轻松如意。"
 								," 不是每一个贝壳里都有珍珠，但珍珠一定出现在贝壳中，不是每个努力的人都会成功，但成功的人一定很努力！","无论工作还是生活，都不要拿脾气当做与他人博弈的武器。即使侥幸一时赢了，最终也只是两败俱伤。一言一语间，完成的是沟通，体现的是修养。或许我们不能成为优秀的别人，却完全可以做更好的自己。"}; %>
-						<h3> <span class="blue bolder"><%=admi.getName() %>(<%=admi.getNum() %>)</span>&nbsp;<%int magic = (int) (Math.random() *6); %><%=sen[magic] %></h3>
+						<h3> <span class="blue bolder"><%=administrator.getName() %></span>&nbsp;<%int magic = (int) (Math.random() *6); %><%= sen[magic] %></h3>
 						</div>
 						<div class="col-sm-2"></div>
 						

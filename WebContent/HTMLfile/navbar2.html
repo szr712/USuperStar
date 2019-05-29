@@ -23,20 +23,9 @@
 						data-toggle="dropdown" href="#" class="dropdown-toggle"> <img
 							class="nav-user-photo" src="assets/images/avatars/avatar4.png"
 							alt="Jason's Photo" /> <span class="user-info"> <small>欢迎,</small>
-								<%
-								String value=null;
-								Cookie cookie = null;
-								Cookie[] cookies = request.getCookies();
-								if (cookies != null) {
-									for (int i = 0; i < cookies.length; i++) {
-										cookie = cookies[i];
-										if (cookie.getName().equals("name"))
-											value = cookie.getValue();
-
-									}
-								}
-								if(value!=null){%> 
-								<%=value %>
+								<%Administrator admi=(Administrator)request.getSession().getAttribute("Admi");
+								if(admi!=null){%> 
+								<%=admi.getName() %>
 								<%}%>
 
 						</span> <i class="ace-icon fa fa-caret-down"></i>

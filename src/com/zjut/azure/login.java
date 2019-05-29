@@ -1,6 +1,9 @@
 package com.zjut.azure;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +18,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
 
 /**
  * Servlet implementation class login
@@ -82,8 +87,7 @@ public class login extends HttpServlet {
 
 					if (!aList.isEmpty() && value2.equals(administrator.getPassword())) {
 
-						request.setAttribute("Admi", administrator);
-
+						request.getSession().setAttribute("Admi", administrator);
 						RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcome.jsp");
 						rDispatcher.forward(request, response);
 					} else {
@@ -135,19 +139,23 @@ public class login extends HttpServlet {
 				if (request.getParameter("login-save") != null && request.getParameter("login-save").equals("on")) {
 					Cookie numCookie = new Cookie("num", num);
 					Cookie passwordCookie = new Cookie("password", password);
+					Cookie nameCookie=new Cookie("name", administrator.getName().trim());
 					numCookie.setMaxAge(60 * 60);//保存一小时
 					passwordCookie.setMaxAge(60 * 60);
+					nameCookie.setMaxAge(60*60);
+					response.addCookie(nameCookie);
 					response.addCookie(numCookie);
 					response.addCookie(passwordCookie);
 				}
 
-				request.setAttribute("Admi", administrator);
+				
+				
+				request.getSession().setAttribute("Admi", administrator);
 				RequestDispatcher rDispatcher = request.getRequestDispatcher("/welcome.jsp");
 				rDispatcher.forward(request, response);
 			} else {
-				request.setAttribute("fail", "登录失败，请重试！");
-				RequestDispatcher rDispatcher = request.getRequestDispatcher("/index.jsp");
-				rDispatcher.forward(request, response);
+				
+				response.sendRedirect("error.jsp");
 			}
 
 		} catch (SQLException e) {
