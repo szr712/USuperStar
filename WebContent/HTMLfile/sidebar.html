@@ -1,0 +1,65 @@
+			<%@page pageEncoding="UTF-8"%>
+		<div id="sidebar"
+			class="sidebar                  responsive                    ace-save-state">
+			<script type="text/javascript">
+				try {
+					ace.settings.loadState('sidebar')
+				} catch (e) {
+				}
+			</script>
+
+			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+					<a class="btn btn-success" href="typeSetting.jsp"> <i
+						class="ace-icon fa fa-cog"></i>
+					</a> <a class="btn btn-info" href="roomSetting.jsp"> <i
+						class="ace-icon fa fa-bed"></i>
+					</a> <a class="btn btn-warning" href="operatorSetting.jsp"> <i
+						class="ace-icon fa fa-user"></i>
+					</a>
+
+					<!-- <button class="btn btn-danger">
+							<i class="ace-icon fa fa-cogs"></i>
+						</button> -->
+				</div>
+
+				<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						
+					</div>
+			</div>
+			<!-- /.sidebar-shortcuts -->
+
+			<ul class="nav nav-list">
+
+				<li class=""><a href="typeSetting.jsp" > <i
+						class="menu-icon fa fa-cog"></i> <span class="menu-text">
+							客房类型设置 </span> 
+							<b class="arrow"></b>
+
+				<li class=""><a href="roomSetting.jsp" > <i
+						class="menu-icon fa fa-bed"></i> <span class="menu-text">
+							客房设置 </span> 
+				</a> <b class="arrow"></b>
+
+				<li class=""><a href="operatorSetting.jsp"> <i
+						class="menu-icon fa fa-user"></i> <span
+						class="menu-text"> 操作员设置 </span> 
+				</a> <b class="arrow"></b>
+
+
+			</ul>
+			<!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i id="sidebar-toggle-icon"
+					class="ace-icon fa fa-angle-double-left ace-save-state"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+		</div>
