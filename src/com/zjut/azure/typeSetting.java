@@ -1,11 +1,13 @@
 package com.zjut.azure;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,19 +24,19 @@ public class typeSetting extends HttpServlet {
 	DataSource dataSource;
 	
 	
-    public void init() {
-    	
-    	try {
-    		System.out.println("goo");
-    		Context context=new InitialContext();
-    		System.out.println("good");
-			dataSource=(DataSource)  context.lookup("java:comp/env/jdbc/UDS");
-			System.out.println("good!");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+//    public void init() {
+//    	
+//    	try {
+//    		//System.out.println("goo");
+//    		Context context=new InitialContext();
+//    		//System.out.println("good");
+//			dataSource=(DataSource)  context.lookup("java:comp/env/jdbc/UDS");
+//			//System.out.println("good!");
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    }
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -48,7 +50,12 @@ public class typeSetting extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		TypeDao typeDao=new TypeDao();
+		ArrayList<Type> typelist=new ArrayList<>();
+		typelist=typeDao.findType();
+		request.setAttribute("typelist", typelist);
+		RequestDispatcher requestDispatcher=getServletContext().getRequestDispatcher("/typeSetting.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 	/**
