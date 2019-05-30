@@ -2,12 +2,12 @@ package com.zjut.azure;
 
 public class Type {
 	
-	String type;
-	String bed;
-	int capability;
-	boolean wifi;
-	int roomsize;
-	float price;
+	private String type;
+	private String bed;
+	private int capability;
+	private boolean wifi;
+	private int roomsize;
+	private float price;
 
 	public String getType() {
 		return type;
