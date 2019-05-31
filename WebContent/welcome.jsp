@@ -1,3 +1,10 @@
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.io.OutputStreamWriter"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.BufferedWriter"%>
+
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="com.zjut.azure.Administrator" %>
@@ -53,6 +60,7 @@
 </head>
 
 <body class="no-skin">
+
 	<div id="navbar" class="navbar navbar-default          ace-save-state">
 		<div class="navbar-container ace-save-state" id="navbar-container">
 			<button type="button" class="navbar-toggle menu-toggler pull-left"
@@ -77,9 +85,12 @@
 						data-toggle="dropdown" href="#" class="dropdown-toggle"> <img
 							class="nav-user-photo" src="assets/images/avatars/avatar4.png"
 							alt="Jason's Photo" /> <span class="user-info"> <small>欢迎,</small>
-								<%Administrator admi=(Administrator)request.getAttribute("Admi");
-								if(admi!=null){%> 
-								<%=admi.getName() %>
+								<%
+								
+								Administrator administrator=(Administrator)request.getSession().getAttribute("Admi");
+								
+								if(administrator!=null){%> 
+								<%=administrator.getName() %>
 								<%}%>
 
 						</span> <i class="ace-icon fa fa-caret-down"></i>
@@ -87,16 +98,15 @@
 
 						<ul
 							class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-							<li><a href="#"> <i class="ace-icon fa fa-cog"></i> 设置
-							</a></li>
+							
 
-							<li><a href="profile.html"> <i
+							<li><a href="profile.jsp"> <i
 									class="ace-icon fa fa-user"></i> 个人信息
 							</a></li>
 
 							<li class="divider"></li>
 
-							<li><a href="login.html"> <i
+							<li><a href="logout"> <i
 									class="ace-icon fa fa-power-off"></i> 退出登录
 							</a></li>
 						</ul></li>
@@ -114,148 +124,11 @@
 			}
 		</script>
 
-		<div id="sidebar"
-			class="sidebar                  responsive                    ace-save-state">
-			<script type="text/javascript">
-				try {
-					ace.settings.loadState('sidebar')
-				} catch (e) {
-				}
-			</script>
-
-			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-					<a class="btn btn-success" href="addbook.html"> <i
-						class="ace-icon fa fa-plus"></i>
-					</a> <a class="btn btn-info" href="showbook.html"> <i
-						class="ace-icon fa fa-info"></i>
-					</a> <a class="btn btn-warning" href="profile.html"> <i
-						class="ace-icon fa fa-user"></i>
-					</a>
-
-					<!-- <button class="btn btn-danger">
-							<i class="ace-icon fa fa-cogs"></i>
-						</button> -->
-				</div>
-
-				<!-- <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div> -->
-			</div>
-			<!-- /.sidebar-shortcuts -->
-
-			<ul class="nav nav-list">
-
-				<li class=""><a href="#" class="dropdown-toggle"> <i
-						class="menu-icon fa fa-desktop"></i> <span class="menu-text">
-							日常操作 </span> <b class="arrow fa fa-angle-down"></b>
-				</a> <b class="arrow"></b>
-
-					<ul class="submenu">
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 图书归还
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 图书借出
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 图书续借
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 借阅查询
-						</a> <b class="arrow"></b></li>
-					</ul></li>
-
-				<li class=""><a href="#" class="dropdown-toggle"> <i
-						class="menu-icon fa fa-file"></i> <span class="menu-text">
-							资料管理 </span> <b class="arrow fa fa-angle-down"></b>
-				</a> <b class="arrow"></b>
-
-					<ul class="submenu">
-						<li class=""><a href="showbook.html"> <i
-								class="menu-icon fa fa-caret-right"></i> 书籍列表
-						</a> <b class="arrow"></b></li>
-						<li class=""><a href="addbook.html"> <i
-								class="menu-icon fa fa-caret-right"></i> 增加书籍
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 修改书籍
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 添加分类
-						</a> <b class="arrow"></b></li>
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 书籍下架
-						</a> <b class="arrow"></b></li>
-					</ul></li>
-
-				<li class=""><a href="#" class="dropdown-toggle"> <i
-						class="menu-icon fa fa-pencil-square-o"></i> <span
-						class="menu-text"> 系统设置 </span> <b class="arrow fa fa-angle-down"></b>
-				</a> <b class="arrow"></b>
-
-					<ul class="submenu">
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 用户管理
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 参数设置
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="profile.html"> <i
-								class="menu-icon fa fa-caret-right"></i> 个人信息
-						</a> <b class="arrow"></b></li>
-
-						<li class=""><a href="#"> <i
-								class="menu-icon fa fa-caret-right"></i> 学生信息
-						</a> <b class="arrow"></b></li>
-					</ul></li>
-
-			</ul>
-			<!-- /.nav-list -->
-
-			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-				<i id="sidebar-toggle-icon"
-					class="ace-icon fa fa-angle-double-left ace-save-state"
-					data-icon1="ace-icon fa fa-angle-double-left"
-					data-icon2="ace-icon fa fa-angle-double-right"></i>
-			</div>
-		</div>
+<%@ include file="HTMLfile/sidebar.html" %>
 
 		<div class="main-content">
 			<div class="main-content-inner">
-				<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-					<ul class="breadcrumb">
-						<li><i class="ace-icon fa fa-tachometer home-icon"></i> <a
-							class="active" href="index.html">总体信息</a></li>
 
-					</ul>
-					<!-- /.breadcrumb -->
-
-					<div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon"> <input type="text"
-								placeholder="Search ..." class="nav-search-input"
-								id="nav-search-input" autocomplete="off" /> <i
-								class="ace-icon fa fa-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div>
-					<!-- /.nav-search -->
-				</div>
 
 				<div class="page-content">
 					<div class="ace-settings-container" id="ace-settings-container">
@@ -292,12 +165,7 @@
 										class="lbl" for="ace-settings-sidebar"> 固定侧边栏</label>
 								</div>
 
-								<div class="ace-settings-item">
-									<input type="checkbox"
-										class="ace ace-checkbox-2 ace-save-state"
-										id="ace-settings-breadcrumbs" autocomplete="off" /> <label
-										class="lbl" for="ace-settings-breadcrumbs"> 固定面包屑导航</label>
-								</div>
+
 
 								<div class="ace-settings-item">
 									<input type="checkbox" class="ace ace-checkbox-2"
@@ -341,295 +209,20 @@
 					<!-- /.ace-settings-container -->
 
 					<div class="page-header">
-						<h1>总体信息</h1>
+						<h1>欢迎登陆！</h1>
 					</div>
 					<!-- /.page-header -->
 
 					<div class="row">
-						<div class="col-xs-12">
-							<!-- PAGE CONTENT BEGINS -->
-							<!-- <div class="alert alert-block alert-success">
-								<button type="button" class="close" data-dismiss="alert">
-									<i class="ace-icon fa fa-times"></i>
-								</button>
-
-								<i class="ace-icon fa fa-check green"></i>
-
-								Welcome to
-								<strong class="green">
-									Ace
-									<small>(v1.4)</small>
-								</strong>,
-								лёгкий, многофункциональный и простой в использовании шаблон для админки на bootstrap
-								3.3.6. Загрузить исходники с <a href="https://github.com/bopoda/ace">github</a> (with
-								minified ace js/css files).
-							</div> -->
-
-							<div class="row ">
-								<div class="space-6"></div>
-								<div class="col-sm-3 text-center">
-									<div class="infobox infobox-green">
-										<div class="infobox-icon">
-											<i class="ace-icon fa fa-book"></i>
-										</div>
-
-										<div class="infobox-data">
-											<span class="infobox-data-number">50</span>
-											<div class="infobox-content">在借书籍</div>
-										</div>
-
-										<div class="stat stat-success">8%</div>
-									</div>
-								</div>
-
-								<div class="col-sm-3 text-center">
-									<div class="infobox infobox-blue">
-										<div class="infobox-icon">
-											<i class="ace-icon fa fa-clone"></i>
-										</div>
-
-										<div class="infobox-data">
-											<span class="infobox-data-number">50</span>
-											<div class="infobox-content">已还书籍</div>
-										</div>
-
-										<div class="stat stat-success">20%</div>
-									</div>
-								</div>
-
-								<div class="col-sm-3 text-center">
-									<div class="infobox infobox-pink">
-										<div class="infobox-icon">
-											<i class="ace-icon fa fa-bookmark-o"></i>
-										</div>
-
-										<div class="infobox-data">
-											<span class="infobox-data-number">18</span>
-											<div class="infobox-content">当前预约书籍</div>
-										</div>
-										<div class="stat stat-important">4%</div>
-									</div>
-								</div>
-
-								<div class="col-sm-3 text-center">
-									<div class="infobox infobox-red">
-										<div class="infobox-icon">
-											<i class="ace-icon fa fa-times-circle"></i>
-										</div>
-
-										<div class="infobox-data">
-											<span class="infobox-data-number">7</span>
-											<div class="infobox-content">逾期未还</div>
-										</div>
-										<div class="stat stat-important">5%</div>
-									</div>
-								</div>
-
-							</div>
-
-							<div class="hr hr10 hr-dotted"></div>
-
-							<div class="row ">
-								<div class="col-sm-6">
-									<div class="widget-box">
-										<div
-											class="widget-header widget-header-flat widget-header-small">
-											<h5 class="widget-title">
-												<i class="ace-icon fa fa-table"></i> 借阅统计
-											</h5>
-
-											<div class="widget-toolbar no-border">
-												<div class="inline dropdown-hover">
-													<button class="btn btn-minier btn-primary">
-														本周 <i
-															class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
-													</button>
-
-													<ul
-														class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
-														<li class="active"><a href="#" class="blue"> <i
-																class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
-																本周
-														</a></li>
-
-														<li><a href="#"> <i
-																class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-																上周
-														</a></li>
-
-														<li><a href="#"> <i
-																class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-																本月
-														</a></li>
-
-														<li><a href="#"> <i
-																class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-																上月
-														</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-
-										<div class="widget-body">
-											<div class="widget-main">
-												<div id="piechart-placeholder"></div>
-
-												<div class="hr hr8 hr-double"></div>
-
-												<div class="clearfix">
-													<div class="grid3">
-														<span class="grey"> <i
-															class="ace-icon fa fa-calculator fa-2x blue"></i> 总出借阅量
-														</span>
-														<h4 class="bigger pull-right">255（册）</h4>
-													</div>
-
-													<div class="grid3">
-														<span class="grey"> <i
-															class="ace-icon fa fa-user fa-2x purple"></i> 教职工
-														</span>
-														<h4 class="bigger pull-right">54（册）</h4>
-													</div>
-
-													<div class="grid3">
-														<span class="grey"> <i
-															class="ace-icon fa  fa-graduation-cap fa-2x red"></i> 学生
-														</span>
-														<h4 class="bigger pull-right">201（册）</h4>
-													</div>
-												</div>
-											</div>
-											<!-- /.widget-main -->
-										</div>
-										<!-- /.widget-body -->
-									</div>
-									<!-- /.widget-box -->
-								</div>
-								<div class="col-sm-6">
-									<div class="widget-box">
-										<div class="widget-header">
-											<h4 class="widget-title lighter smaller">
-												<i class="ace-icon fa fa-comment blue"></i> 读者留言
-											</h4>
-										</div>
-
-										<div class="widget-body">
-											<div class="widget-main no-padding">
-												<div class="dialogs">
-													<div class="itemdiv dialogdiv">
-														<div class="user">
-															<img alt="Alexa's Avatar"
-																src="assets/images/avatars/avatar1.png" />
-														</div>
-
-														<div class="body">
-															<div class="time">
-																<i class="ace-icon fa fa-clock-o"></i> <span
-																	class="green">星期三</span>
-															</div>
-
-															<div class="name">
-																<a href="#">潘潘</a>
-															</div>
-															<div class="text">希望增加有关web前端书籍。</div>
-
-															<div class="tools">
-																<a href="#" class="btn btn-minier btn-info"> <i
-																	class="icon-only ace-icon fa fa-share"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-
-													<div class="itemdiv dialogdiv">
-														<div class="user">
-															<img alt="John's Avatar"
-																src="assets/images/avatars/avatar.png" />
-														</div>
-
-														<div class="body">
-															<div class="time">
-																<i class="ace-icon fa fa-clock-o"></i> <span
-																	class="blue">星期一</span>
-															</div>
-
-															<div class="name">
-																<a href="#">蒙蒙</a>
-															</div>
-															<div class="text">希望增加有关web前端书籍。</div>
-
-															<div class="tools">
-																<a href="#" class="btn btn-minier btn-info"> <i
-																	class="icon-only ace-icon fa fa-share"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-
-													<div class="itemdiv dialogdiv">
-														<div class="user">
-															<img alt="Jim's Avatar"
-																src="assets/images/avatars/avatar4.png" />
-														</div>
-
-														<div class="body">
-															<div class="time">
-																<i class="ace-icon fa fa-clock-o"></i> <span
-																	class="grey">19/4/20</span>
-															</div>
-
-															<div class="name">
-																<a href="#">老王</a>
-															</div>
-															<div class="text">希望增加有关web前端书籍。</div>
-
-															<div class="tools">
-																<a href="#" class="btn btn-minier btn-info"> <i
-																	class="icon-only ace-icon fa fa-share"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-
-													<div class="itemdiv dialogdiv">
-														<div class="user">
-															<img alt="Alexa's Avatar"
-																src="assets/images/avatars/avatar1.png" />
-														</div>
-
-														<div class="body">
-															<div class="time">
-																<i class="ace-icon fa fa-clock-o"></i> <span
-																	class="green">19/4/19</span>
-															</div>
-
-															<div class="name">
-																<a href="#">潘潘</a>
-															</div>
-															<div class="text">希望增加有关web前端书籍。</div>
-
-															<div class="tools">
-																<a href="#" class="btn btn-minier btn-info"> <i
-																	class="icon-only ace-icon fa fa-share"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- /.widget-main -->
-										</div>
-										<!-- /.widget-body -->
-									</div>
-									<!-- /.widget-box -->
-								</div>
-								<!-- /.col -->
-							</div>
-
-							<!-- PAGE CONTENT ENDS -->
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+								<%!String [] sen={"从没有白费的努力，也没有碰巧的成功。只要认真对待工作，终有一天，你的每一份努力，都将绚烂成花。","生活从来都是公平的，你未来的模样，藏在你现在的努力里。有规划的人生，真的会比浑浑噩噩精彩一万倍。新的每一天，请勇敢去尝试，拼命去追寻。",
+								"和什么样的人在一起，就会有什么样的人生。和勤奋的人在一起，你不会懒惰；和积极的人在一起，你不会消沉；与高人为伍，你能登上巅峰。","人生最可悲的事情，莫过于胸怀大志，却又虚度光阴。没有行动，懒惰就会生根发芽；没有梦想，堕落就会生根发芽。每一个不努力的时光，都是对生命的辜负。不要再为生活彷徨，放手去做去实现，人生才更美。如果自己没有尽力，就没有资格去抱怨生活。你必须暗自努力，才能在人前显得轻松如意。"
+								," 不是每一个贝壳里都有珍珠，但珍珠一定出现在贝壳中，不是每个努力的人都会成功，但成功的人一定很努力！","无论工作还是生活，都不要拿脾气当做与他人博弈的武器。即使侥幸一时赢了，最终也只是两败俱伤。一言一语间，完成的是沟通，体现的是修养。或许我们不能成为优秀的别人，却完全可以做更好的自己。"}; %>
+						<h3> <span class="blue bolder"><%=administrator.getName() %></span>&nbsp;<%int magic = (int) (Math.random() *6); %><%= sen[magic] %></h3>
 						</div>
-						<!-- /.col -->
+						<div class="col-sm-2"></div>
+						
 					</div>
 					<!-- /.row -->
 				</div>
@@ -638,21 +231,7 @@
 		</div>
 		<!-- /.main-content -->
 
-		<div class="footer">
-			<div class="footer-inner">
-				<div class="footer-content">
-					<span class="bigger-120"> <span class="blue bolder">图书</span>
-						管理系统 &copy; szr
-					</span> &nbsp; &nbsp; <span class="action-buttons"> <a href="#">
-							<i class="ace-icon fa fa-weixin light-green bigger-150"></i>
-					</a> <a href="#"> <i
-							class="ace-icon fa fa-qq text-primary bigger-150"></i>
-					</a> <a href="#"> <i class="ace-icon fa fa-weibo orange bigger-150"></i>
-					</a>
-					</span>
-				</div>
-			</div>
-		</div>
+<%@ include file="HTMLfile/footer.html" %>
 
 		<a href="#" id="btn-scroll-up"
 			class="btn-scroll-up btn btn-sm btn-inverse"> <i
@@ -696,272 +275,8 @@
 	<script src="assets/js/ace-elements.min.js"></script>
 	<script src="assets/js/ace.min.js"></script>
 
-	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
-		jQuery(function($) {
-			$('.easy-pie-chart.percentage')
-					.each(
-							function() {
-								var $box = $(this).closest('.infobox');
-								var barColor = $(this).data('color')
-										|| (!$box.hasClass('infobox-dark') ? $box
-												.css('color')
-												: 'rgba(255,255,255,0.95)');
-								var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)'
-										: '#E2E2E2';
-								var size = parseInt($(this).data('size')) || 50;
-								$(this)
-										.easyPieChart(
-												{
-													barColor : barColor,
-													trackColor : trackColor,
-													scaleColor : false,
-													lineCap : 'butt',
-													lineWidth : parseInt(size / 10),
-													animate : ace.vars['old_ie'] ? false
-															: 1000,
-													size : size
-												});
-							})
 
-			$('.sparkline').each(
-					function() {
-						var $box = $(this).closest('.infobox');
-						var barColor = !$box.hasClass('infobox-dark') ? $box
-								.css('color') : '#FFF';
-						$(this).sparkline('html', {
-							tagValuesAttribute : 'data-values',
-							type : 'bar',
-							barColor : barColor,
-							chartRangeMin : $(this).data('min') || 0
-						});
-					});
 
-			//flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-			//but sometimes it brings up errors with normal resize event handlers
-			$.resize.throttleWindow = false;
-
-			var placeholder = $('#piechart-placeholder').css({
-				'width' : '90%',
-				'min-height' : '150px'
-			});
-			var data = [ {
-				label : "马列主义、毛泽东思想",
-				data : 10,
-				color : "#68BC31"
-			}, {
-				label : "哲学",
-				data : 24.5,
-				color : "#2091CF"
-			}, {
-				label : "社会科学",
-				data : 8.2,
-				color : "#AF4E96"
-			}, {
-				label : "自然科学",
-				data : 18.6,
-				color : "#DA5430"
-			}, {
-				label : "综合性图书",
-				data : 38.7,
-				color : "#FEE074"
-			} ]
-
-			function drawPieChart(placeholder, data, position) {
-				$.plot(placeholder, data, {
-					series : {
-						pie : {
-							show : true,
-							tilt : 0.8,
-							highlight : {
-								opacity : 0.25
-							},
-							stroke : {
-								color : '#fff',
-								width : 2
-							},
-							startAngle : 2
-						}
-					},
-					legend : {
-						show : true,
-						position : position || "ne",
-						labelBoxBorderColor : null,
-						margin : [ -30, 15 ]
-					},
-					grid : {
-						hoverable : true,
-						clickable : true
-					}
-				})
-			}
-			drawPieChart(placeholder, data);
-
-			/**
-			we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-			so that's not needed actually.
-			 */
-			placeholder.data('chart', data);
-			placeholder.data('draw', drawPieChart);
-
-			//pie chart tooltip example
-			var $tooltip = $(
-					"<div class='tooltip top in'><div class='tooltip-inner'></div></div>")
-					.hide().appendTo('body');
-			var previousPoint = null;
-
-			placeholder.on('plothover', function(event, pos, item) {
-				if (item) {
-					if (previousPoint != item.seriesIndex) {
-						previousPoint = item.seriesIndex;
-						var tip = item.series['label'] + " : "
-								+ item.series['percent'] + '%';
-						$tooltip.show().children(0).text(tip);
-					}
-					$tooltip.css({
-						top : pos.pageY + 10,
-						left : pos.pageX + 10
-					});
-				} else {
-					$tooltip.hide();
-					previousPoint = null;
-				}
-
-			});
-
-			/////////////////////////////////////
-			$(document).one('ajaxloadstart.page', function(e) {
-				$tooltip.remove();
-			});
-
-			var d1 = [];
-			for (var i = 0; i < Math.PI * 2; i += 0.5) {
-				d1.push([ i, Math.sin(i) ]);
-			}
-
-			var d2 = [];
-			for (var i = 0; i < Math.PI * 2; i += 0.5) {
-				d2.push([ i, Math.cos(i) ]);
-			}
-
-			var d3 = [];
-			for (var i = 0; i < Math.PI * 2; i += 0.2) {
-				d3.push([ i, Math.tan(i) ]);
-			}
-
-			var sales_charts = $('#sales-charts').css({
-				'width' : '100%',
-				'height' : '220px'
-			});
-			$.plot("#sales-charts", [ {
-				label : "Domains",
-				data : d1
-			}, {
-				label : "Hosting",
-				data : d2
-			}, {
-				label : "Services",
-				data : d3
-			} ], {
-				hoverable : true,
-				shadowSize : 0,
-				series : {
-					lines : {
-						show : true
-					},
-					points : {
-						show : true
-					}
-				},
-				xaxis : {
-					tickLength : 0
-				},
-				yaxis : {
-					ticks : 10,
-					min : -2,
-					max : 2,
-					tickDecimals : 3
-				},
-				grid : {
-					backgroundColor : {
-						colors : [ "#fff", "#fff" ]
-					},
-					borderWidth : 1,
-					borderColor : '#555'
-				}
-			});
-
-			$('#recent-box [data-rel="tooltip"]').tooltip({
-				placement : tooltip_placement
-			});
-
-			function tooltip_placement(context, source) {
-				var $source = $(source);
-				var $parent = $source.closest('.tab-content')
-				var off1 = $parent.offset();
-				var w1 = $parent.width();
-
-				var off2 = $source.offset();
-				//var w2 = $source.width();
-
-				if (parseInt(off2.left) < parseInt(off1.left)
-						+ parseInt(w1 / 2))
-					return 'right';
-				return 'left';
-			}
-
-			$('.dialogs,.comments').ace_scroll({
-				size : 300
-			});
-
-			//Android's default browser somehow is confused when tapping on label which will lead to dragging the task
-			//so disable dragging when clicking on label
-			var agent = navigator.userAgent.toLowerCase();
-			if (ace.vars['touch'] && ace.vars['android']) {
-				$('#tasks').on('touchstart', function(e) {
-					var li = $(e.target).closest('#tasks li');
-					if (li.length == 0)
-						return;
-					var label = li.find('label.inline').get(0);
-					if (label == e.target || $.contains(label, e.target))
-						e.stopImmediatePropagation();
-				});
-			}
-
-			$('#tasks').sortable({
-				opacity : 0.8,
-				revert : true,
-				forceHelperSize : true,
-				placeholder : 'draggable-placeholder',
-				forcePlaceholderSize : true,
-				tolerance : 'pointer',
-				stop : function(event, ui) {
-					//just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
-					$(ui.item).css('z-index', 'auto');
-				}
-			});
-			$('#tasks').disableSelection();
-			$('#tasks input:checkbox').removeAttr('checked').on('click',
-					function() {
-						if (this.checked)
-							$(this).closest('li').addClass('selected');
-						else
-							$(this).closest('li').removeClass('selected');
-					});
-
-			//show the dropdowns on top or bottom depending on window height and menu position
-			$('#task-tab .dropdown-hover').on('mouseenter', function(e) {
-				var offset = $(this).offset();
-
-				var $w = $(window)
-				if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
-					$(this).addClass('dropup');
-				else
-					$(this).removeClass('dropup');
-			});
-
-		})
-	</script>
 </body>
 
 </html>
