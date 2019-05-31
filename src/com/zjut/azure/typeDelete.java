@@ -1,13 +1,14 @@
 package com.zjut.azure;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sun.org.apache.xml.internal.serializer.utils.SystemIDResolver;
 
 /**
  * Servlet implementation class typeDelete
@@ -29,7 +30,14 @@ public class typeDelete extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println(request.getParameter("delete"));
+		TypeDao typeDao=new TypeDao();
+		int i=Integer.parseInt(request.getParameter("delete"));
+		ArrayList<Type> typelist=typeDao.findType();
+		boolean flag=typeDao.deleteType(typelist.get(i));
+		if(flag) {
+			RequestDispatcher requestDispatcher=getServletContext().getRequestDispatcher("/typeSetting");
+			requestDispatcher.forward(request, response);
+		}
 		
 	}
 
