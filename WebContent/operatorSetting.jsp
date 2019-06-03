@@ -329,7 +329,7 @@
 
 								<div class="modal-body no-padding">
 									<tr class="detail-row">
-										<form class="form-horizontal" role="form" action="typeChange"
+										<form class="form-horizontal" role="form" action="operateChange"
 											method="POST" accept-charset="UTF-8">
 											<div class="space-6"></div>
 											<div class="form-group">
