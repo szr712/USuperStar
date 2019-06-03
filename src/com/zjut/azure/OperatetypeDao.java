@@ -59,8 +59,8 @@ public class OperatetypeDao extends BaseDao
 		
 		
 		// 更改一个操作员
-		public boolean changeType(Operatetype type,String Ttype) {
-			String sql="UPDATE Operator	SET Onum=?,Oname=?,Osex=?,Oemail=?,Opassword=?";
+		public boolean changeType(Operatetype type,String Onum) {
+			String sql="UPDATE Operator	SET Onum=?,Oname=?,Osex=?,Oemail=?,Opassword=? WHERE Onum=?";
 			Connection connection;
 			try {
 				connection=dataSource.getConnection();
@@ -70,6 +70,7 @@ public class OperatetypeDao extends BaseDao
 				preparedStatement.setString(3, type.getSex());
 				preparedStatement.setString(4, type.getEmail());
 				preparedStatement.setString(5, type.getPassword());
+				preparedStatement.setString(6, Onum);
 				preparedStatement.executeUpdate();
 				connection.close();
 				return true;
