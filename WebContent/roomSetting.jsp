@@ -276,7 +276,7 @@
 													<select name="status" class="col-xs-8">
 														<option value="空闲">空闲</option>
 														<option value="有客">有客</option>
-														<option value="预约">预约</option>
+													
 													</select>
 												</div>
 											</div>
@@ -286,7 +286,7 @@
 
 												<div class="col-sm-9">
 													<input type="text" placeholder="备注" class="col-xs-8"
-														required="required" name="remark"/>
+														 name="remark"/>
 												</div>
 											</div>
 
@@ -361,7 +361,7 @@
 													<select name="status" class="col-xs-8">
 														<option value="空闲" <%if(roomlist.get(i).getStatus().equals("空闲")) {%>selected="selected"<%} %>>空闲</option>
 														<option value="有客" <%if(roomlist.get(i).getStatus().equals("有客")) {%>selected="selected"<%} %>>有客</option>
-														<option value="预约" <%if(roomlist.get(i).getStatus().equals("预约")) {%>selected="selected"<%} %>>预约</option>
+														
 													</select>
 												</div>
 											</div>

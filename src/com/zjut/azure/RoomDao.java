@@ -99,7 +99,7 @@ public class RoomDao extends BaseDao {
 				room.setNum(resultSet.getString("Rnum").trim());
 				room.setType(resultSet.getString("Rtype").trim());
 				room.setStatus(resultSet.getString("Rstatus").trim());
-				if(resultSet.getString("Rremark").trim().equals("") || resultSet.getString("Rremark").trim().equals("null"))room.setRemark("无");
+				if(resultSet.getString("Rremark").trim().equals("") || resultSet.getString("Rremark").trim().equals(null))room.setRemark("无");
 				else room.setRemark(resultSet.getString("Rremark"));
 				roomlist.add(room);
 			}
